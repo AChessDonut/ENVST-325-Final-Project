@@ -42,87 +42,86 @@ hazard_labels <- c(
   "WFIR_RISKS" = "Wildfire"
 )
 
-
 mercer_hazard_long <- mercer %>%
   select(COUNTY, CFLD_RISKS, DRGT_RISKS, WFIR_RISKS, HWAV_RISKS, HRCN_RISKS, 
          LNDS_RISKS, RFLD_RISKS, TRND_RISKS, ISTM_RISKS) %>%  # Select hazard columns
-  pivot_longer(
-    cols = -COUNTY,                   # Reshape all columns except COUNTY
-    names_to = "Hazard_Type",         # New column for hazard types
-    values_to = "Risk_Score"          # New column for risk scores
+  pivot_longer(                       # Extends number of rows the data frame can take
+    cols = -COUNTY,                   # Reshapes the columns except county
+    names_to = "Hazard_Type",         # Designates a column for hazard types
+    values_to = "Risk_Score"          # Designates a for risk scores
   )
 print(mercer_hazard_long)
-
+#Plots the hazard risk scores in Mercer County
 ggplot(mercer_hazard_long, aes(x = Hazard_Type, y = Risk_Score, fill = Hazard_Type)) +
   geom_bar(stat = "identity", position = "dodge", width = 0.7) +
   scale_fill_manual(
     values = custom_colors,  # Use the updated colorblind-friendly palette
-    labels = hazard_labels      # Replace legend labels with friendly names
+    labels = hazard_labels   # Replace hazard variable names labels with actual label names 
   ) +
   labs(
     title = "Hazard Risk Scores by Type in Mercer County",
     x = "Hazard Type",
     y = "Risk Score",
-    fill = "Hazard Type"         # Rename legend title
+    fill = "Hazard Type"         
   ) +
-  theme_minimal() +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+  theme_minimal() + #Makes the background clear to see
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) #Ensures the label names are correctly placed
 
 #---------
 monmouth_hazard_long <- monmouth %>%
   select(COUNTY, CFLD_RISKS, DRGT_RISKS, WFIR_RISKS, HWAV_RISKS, HRCN_RISKS, 
          LNDS_RISKS, RFLD_RISKS, TRND_RISKS, ISTM_RISKS) %>%  # Select hazard columns
-  pivot_longer(
-    cols = -COUNTY,                   # Reshape the columns except county
-    names_to = "Hazard_Type",         # New column for hazard types
-    values_to = "Risk_Score"          # New column for risk scores
+  pivot_longer(                       #Extends number of rows the data frame can take
+    cols = -COUNTY,                   # Reshapes the columns except county
+    names_to = "Hazard_Type",         # Designates a column for hazard types
+    values_to = "Risk_Score"          # Designates a for risk scores
   )
 
 # View the reshaped data
 print(monmouth_hazard_long)
-
+#Plots the hazard risk scores in Monmouth County
 ggplot(monmouth_hazard_long, aes(x = Hazard_Type, y = Risk_Score, fill = Hazard_Type)) +
   geom_bar(stat = "identity", position = "dodge", width = 0.7) +
   scale_fill_manual(
-    values = custom_colors,  # Use the colorblind-friendly palette
-    labels = hazard_labels   # Use easy-to-understand labels
+    values = custom_colors,  # Use the updated colorblind-friendly palette
+    labels = hazard_labels   # Replace hazard variable names labels with actual label names 
   ) +
   labs(
-    title = "Hazard Risk Scores by Type in Monmouth County",
+    title = "Hazard Risk Scores in Monmouth County",
     x = "Hazard Type",
     y = "Risk Score",
     fill = "Hazard Type"         
   ) +
-  theme_minimal() +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+  theme_minimal() + #Makes the background clear to see
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) #Ensures the label names are correctly placed
 
 #---------------
 middlesex_hazard_long <- middlesex %>%
   select(COUNTY, CFLD_RISKS, DRGT_RISKS, WFIR_RISKS, HWAV_RISKS, HRCN_RISKS, 
          LNDS_RISKS, RFLD_RISKS, TRND_RISKS, ISTM_RISKS) %>%  # Select hazard columns
-  pivot_longer(
-    cols = -COUNTY,                   # Reshape all columns except COUNTY
-    names_to = "Hazard_Type",         # New column for hazard types
-    values_to = "Risk_Score"          # New column for risk scores
+  pivot_longer( #Extends number of rows the data frame can take
+    cols = -COUNTY,                   # Reshapes the columns except county
+    names_to = "Hazard_Type",         # Designates a column for hazard types
+    values_to = "Risk_Score"          # Designates a for risk scores
   )
 
 # View the reshaped data
 print(middlesex_hazard_long)
-
+#Plots the hazard risk scores in Middlesex County
 ggplot(middlesex_hazard_long, aes(x = Hazard_Type, y = Risk_Score, fill = Hazard_Type)) +
   geom_bar(stat = "identity", position = "dodge", width = 0.7) +
   scale_fill_manual(
     values = custom_colors,  # Use the updated colorblind-friendly palette
-    labels = hazard_labels      # Replace legend labels with friendly names
+    labels = hazard_labels   # Replace hazard variable names labels with actual label names 
   ) +
   labs(
-    title = "Hazard Risk Scores by Type in Middlesex County",
+    title = "Hazard Risk Scores in Middlesex County",
     x = "Hazard Type",
     y = "Risk Score",
-    fill = "Hazard Type"         # Rename legend title
+    fill = "Hazard Type"        
   ) +
-  theme_minimal() +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 10))
+  theme_minimal() + #Makes the background clear to see
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) #Ensures the label names are correctly placed
 #---------------
 # Calculates the average risk scores by hazard type excluding zeros for Mercer County
 mercer_avg_risks <- mercer_hazard_long %>%
@@ -166,7 +165,7 @@ ggplot(combined_risks, aes(x = Hazard_Type, y = Avg_Risk, fill = Hazard_Type)) +
     y = "Average Risk Score",
     fill = "Hazard Type"
   ) +
-  theme_minimal() +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+  theme_minimal() +                                        # Makes the background clear to see
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) # Ensures the label names are correctly placed
 
 
